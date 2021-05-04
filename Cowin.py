@@ -5,10 +5,8 @@ from twilio.rest import Client
 from datetime import datetime
 from datetime import timedelta
 from dotenv import load_dotenv
-from pathlib import Path
 
-dotenv_path = Path('.env')
-load_dotenv(dotenv_path=dotenv_path)
+load_dotenv()
 
 # Your Account SID from twilio.com/console
 account_sid = os.getenv('TWILIO_ACCOUNT_SID')
