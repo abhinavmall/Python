@@ -33,7 +33,7 @@ class TwilioSms(object):
         print('Sent message to' + message.sid)
 
 
-twilio_sms = TwilioSms()
+twilio = TwilioSms()
 
 # Dates to get data for - today and next week (dd-mm-YYYY).
 today = datetime.today()
@@ -70,7 +70,7 @@ for CALENDAR_PARAM in CALENDAR_PARAMS:
                                   + center_name + ', ' \
                                   + center_address + ' on ' + session_date
                     print('SMS Text = ' + sms_text)
-                    twilio_sms.send_sms(to=ABHINAV_CELL, text=sms_text)
-                    twilio_sms.send_sms(to=ASHUTOSH_CELL, text=sms_text)
+                    twilio.send_sms(to=ABHINAV_CELL, text=sms_text)
+                    twilio.send_sms(to=ASHUTOSH_CELL, text=sms_text)
 
 print('Completed at ' + str(datetime.now()) + ' for dates = ' + today_date + ' and ' + next_week_date)
