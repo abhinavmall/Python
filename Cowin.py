@@ -34,7 +34,6 @@ class TWILIO_SMS(object):
 
 
 twilio_sms = TWILIO_SMS()
-
 today = datetime.today()
 next_week = today + timedelta(days=7)
 today_date = today.strftime('%d-%m-%Y')
@@ -43,9 +42,10 @@ next_week_date = next_week.strftime('%d-%m-%Y')
 # Get calendar data
 CALENDAR_URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin"
 CALENDAR_PARAMS = [{'pincode': "201301", 'date': today_date}, {'pincode': "201301", 'date': next_week_date}]
+HEADERS = {'referer': "https://selfregistration.cowin.gov.in/", 'origin': "https://selfregistration.cowin.gov.in", 'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.93 Safari/537.36 Edg/90.0.818.51"}
 
 for CALENDAR_PARAM in CALENDAR_PARAMS:
-    response = requests.get(url=CALENDAR_URL, params=CALENDAR_PARAM)
+    response = requests.get(url=CALENDAR_URL, headers=HEADERS, params=CALENDAR_PARAM)
     print('Checking for ' + str(CALENDAR_PARAM))
     # Get centers list
     centers = response.json()['centers']
