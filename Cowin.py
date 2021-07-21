@@ -36,14 +36,14 @@ class TwilioSms(object):
 twilio = TwilioSms()
 
 # Dates to get data for - today and next week (dd-mm-YYYY).
-today = datetime.today()
-next_week = today + timedelta(days=7)
-today_date = today.strftime('%d-%m-%Y')
-next_week_date = next_week.strftime('%d-%m-%Y')
+# today = datetime.today()
+# next_week = today + timedelta(days=7)
+today_date = '02-08-2021'
+next_week_date = '09-08-2021'
 
 # Cowin api for calendar data.
-CALENDAR_URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByPin"
-CALENDAR_PARAMS = [{'pincode': "201301", 'date': today_date}, {'pincode': "201301", 'date': next_week_date}]
+CALENDAR_URL = "https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/calendarByDistrict"
+CALENDAR_PARAMS = [{'district_id': "650", 'date': today_date}, {'district_id': "650", 'date': next_week_date}]
 HEADERS = {'referer': "https://selfregistration.cowin.gov.in/",
            'origin': "https://selfregistration.cowin.gov.in",
            'user-agent': "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -64,11 +64,13 @@ for CALENDAR_PARAM in CALENDAR_PARAMS:
                 session_date = session['date']
                 session_min_age_limit = session['min_age_limit']
                 session_available_capacity = session['available_capacity']
-                if (session_available_capacity > 0) and (session_min_age_limit == 18):
+                session_available_capacity_dose2 = session['available_capacity_dose2']
+                if (session_available_capacity > 0) and (session_min_age_limit == 18) and (
+                        session_available_capacity_dose2 > 0):
                     sms_text = str(
                         session_available_capacity) + ' slots at ' \
-                                  + center_name + ', ' \
-                                  + center_address + ' on ' + session_date
+                               + center_name + ', ' \
+                               + center_address + ' on ' + session_date
                     print('SMS Text = ' + sms_text)
                     twilio.send_sms(to=ABHINAV_CELL, text=sms_text)
                     twilio.send_sms(to=ASHUTOSH_CELL, text=sms_text)
